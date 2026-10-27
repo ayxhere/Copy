@@ -45,7 +45,7 @@ class CommandAdapter(
                 if (command.isFavorite) R.drawable.ic_star_filled else R.drawable.ic_star
             )
             binding.btnFavorite.setColorFilter(
-                holder.itemView.context.getColor(if (command.isFavorite) R.color.accent else R.color.text_tertiary),
+                itemView.context.getColor(if (command.isFavorite) R.color.accent else R.color.text_tertiary),
                 android.graphics.PorterDuff.Mode.SRC_IN
             )
 
