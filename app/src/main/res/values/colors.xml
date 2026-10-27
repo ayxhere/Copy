@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- AMOLED Core -->
+    <color name="black">#FF000000</color>
+    <color name="surface">#FF0A0A0A</color>
+    <color name="surface_variant">#FF141414</color>
+    <color name="card">#FF1A1A1A</color>
+    <color name="card_elevated">#FF222222</color>
+    <color name="divider">#1AFFFFFF</color>
+
+    <!-- Blue Accent -->
+    <color name="accent">#FF4ADE80</color>
+    <color name="accent_dark">#FF22C55E</color>
+    <color name="accent_dim">#334ADE80</color>
+    <color name="accent_glow">#664ADE80</color>
+
+    <!-- Text -->
+    <color name="text_primary">#FFFFFFFF</color>
+    <color name="text_secondary">#99FFFFFF</color>
+    <color name="text_tertiary">#55FFFFFF</color>
+    <color name="text_accent">#FF4FC3F7</color>
+
+    <!-- Status -->
+    <color name="success">#FF4CAF50</color>
+    <color name="error">#FFCF6679</color>
+    <color name="warning">#FFFFB300</color>
+
+    <!-- Ripple -->
+    <color name="ripple">#224ADE80</color>
+</resources>
