@@ -22,8 +22,10 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      # No setup-android action: v3 tries to install the obsolete "tools"
+      # package via sdkmanager, which no longer exists, and fails the job
+      # in 9s. ubuntu-24.04 runners already ship ANDROID_HOME, so we only
+      # install the exact platform + build-tools we need in the next step.
 
       - name: Install SDK packages (API 34)
         run: |
