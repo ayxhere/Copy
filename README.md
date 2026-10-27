@@ -30,3 +30,26 @@ zip me hai, is repo snapshot me binary files nahi hain.
 
 ## Version
 v5.0 (versionCode 6) — AyX Copy
+
+## GitHub se build (Actions)
+Repo me `.github/workflows/build.yml` hai. `main` par push hote hi Actions
+chalta hai aur 2 artifact deta hai: `AyXCopy-debug` (hamesha installable)
+aur `AyXCopy-release` (secret ho to signed, nahi to unsigned).
+Artifact download: repo > Actions > latest run > Artifacts.
+
+## Release signature (GitHub Secrets — keystore kabhi repo me nahi)
+Repo PUBLIC hai, isliye keystore file ya password kabhi commit mat karna.
+Release sign karne ke liye repo > Settings > Secrets and variables > Actions
+me ye 4 secrets dalo:
+- `ANDROID_KEYSTORE_BASE64` — ayx-copy.p12 ka base64
+- `KEYSTORE_PASSWORD`, `KEY_ALIAS` (`ayx`), `KEY_PASSWORD`
+Secrets dalne ke baad workflow dobara chalao (Actions > Run workflow).
+
+## Commands: `.` aur `,` ka rule
+- Exact prefix pehle: `.8` sirf `.8` wali row, `,8` sirf `,8` wali row.
+  Isliye PasteMe ke 17 paired commands (English `.` / Roman `,`) alag-alag
+  rehte hain, ek doosre ko overwrite nahi karte.
+- Fallback: agar sirf ek version saved hai (jaise sirf `.ii`), to dono
+  prefix usi row ko chalayenge.
+- Import: `ayx.json` ke saath-saath PasteMe backup (`templates` format)
+  bhi seedha import hota hai, duplicate row nahi banti.

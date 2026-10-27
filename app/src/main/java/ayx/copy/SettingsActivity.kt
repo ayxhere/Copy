@@ -185,22 +185,46 @@ class SettingsActivity : AppCompatActivity() {
                 contentResolver.openInputStream(uri)?.use { BufferedReader(InputStreamReader(it)).readText() }
             } ?: return@launch
             try {
-                val array: JSONArray = if (text.trimStart().startsWith("{")) {
-                    JSONObject(text).getJSONArray("commands")
-                } else JSONArray(text)
-                val toInsert = (0 until array.length()).map {
-                    val obj = array.getJSONObject(it)
-                    Command(
-                        command         = obj.getString("command"),
-                        replacementText = obj.getString("replacementText"),
-                        isFavorite      = obj.optBoolean("isFavorite", false)
+                // Accepts 3 shapes:
+                //  ayx.json:      {"commands": [{"command","replacementText","isFavorite"}]}
+                //  pasteme:       {"templates": [{"shortcut","content","isFavourite"}]}
+                //  plain array:   [{"command","replacementText"}] or pasteme objects
+                val raw: List<JSONObject> = if (text.trimStart().startsWith("{")) {
+                    val root = JSONObject(text)
+                    val arr = when {
+                        root.has("commands") -> root.getJSONArray("commands")
+                        root.has("templates") -> root.getJSONArray("templates")
+                        else -> throw IllegalArgumentException("No commands/templates array")
+                    }
+                    (0 until arr.length()).map { arr.getJSONObject(it) }
+                } else {
+                    val arr = JSONArray(text)
+                    (0 until arr.length()).map { arr.getJSONObject(it) }
+                }
+                val toInsert = raw.mapNotNull { obj ->
+                    val cmd = obj.optString("command").ifBlank { obj.optString("shortcut") }
+                    val txt = obj.optString("replacementText").ifBlank { obj.optString("content") }
+                    if (cmd.isBlank() || txt.isBlank()) null
+                    else Command(
+                        command = cmd,
+                        replacementText = txt,
+                        isFavorite = obj.optBoolean("isFavorite", obj.optBoolean("isFavourite", obj.optBoolean("isPinned", false)))
                     )
                 }
-                withContext(Dispatchers.IO) { toInsert.forEach { db.commandDao().insert(it) } }
-                Toast.makeText(this@SettingsActivity, getString(R.string.backup_imported), Toast.LENGTH_SHORT).show()
+                var inserted = 0
+                withContext(Dispatchers.IO) {
+                    for (item in toInsert) {
+                        // Exact-name dedupe: ".8" and ",8" stay separate rows,
+                        // re-importing the same file does not duplicate rows.
+                        if (db.commandDao().getCommandByExactName(item.command) == null) {
+                            db.commandDao().insert(item)
+                            inserted++
+                        }
+                    }
+                }
+                Toast.makeText(this@SettingsActivity, "$inserted commands imported", Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
                 Toast.makeText(this@SettingsActivity, "Invalid backup file", Toast.LENGTH_SHORT).show()
             }
         }
     }
-}

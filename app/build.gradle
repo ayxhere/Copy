@@ -14,10 +14,30 @@ android {
         versionName "5.0"
     }
 
+    // Release signing is SECRET-DRIVEN, never committed:
+    // CI decodes ANDROID_KEYSTORE_BASE64 to ayx-copy.p12 and passes
+    // AYX_STORE_PASSWORD / AYX_KEY_ALIAS / AYX_KEY_PASSWORD as Gradle
+    // properties. Without them, release builds unsigned (debug still works).
+    signingConfigs {
+        release {
+            def storeObj = rootProject.file("ayx-copy.p12")
+            if (storeObj.exists() && project.hasProperty("AYX_STORE_PASSWORD")) {
+                storeFile storeObj
+                storePassword project.property("AYX_STORE_PASSWORD")
+                keyAlias project.findProperty("AYX_KEY_ALIAS") ?: "ayx"
+                keyPassword project.property("AYX_KEY_PASSWORD")
+                storeType "PKCS12"
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            if (rootProject.file("ayx-copy.p12").exists() && project.hasProperty("AYX_STORE_PASSWORD")) {
+                signingConfig signingConfigs.release
+            }
         }
     }
 

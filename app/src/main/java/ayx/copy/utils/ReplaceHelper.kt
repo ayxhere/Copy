@@ -10,37 +10,40 @@ import ayx.copy.database.Command
 object ReplaceHelper {
 
     /**
-     * Scans [currentText] for any command from [commands] that appears as a
-     * "word" immediately before the cursor (i.e. at the end of the string,
-     * since accessibility text-changed events give us the text as typed so far).
-     *
-     * A command is only considered a match if it is bounded by whitespace,
-     * start-of-string, or common punctuation on the left, and is at the very
-     * end of [currentText] (so we don't replace things mid-sentence while
-     * still typing).
-     *
-     * Returns a [MatchResult] with the matched command and the text that
-     * should replace it, or null if no match.
-     */
-    /**
-     * Saved ".upi" and typed ",upi" are the SAME command, and vice versa.
-     * The first char may be '.' or ',' — the word after it must match exactly.
-     * Longer commands win, so ".upi2" is not shadowed by ".upi".
+     * Two phases, in this order:
+     *  1. EXACT prefix: typed ".8" matches saved ".8", typed ",8" matches saved ",8".
+     *     This is what keeps PasteMe pairs apart: ".8" = English text, ",8" = Roman text.
+     *  2. FALLBACK: if no exact row exists (e.g. only ".ii" saved), the opposite
+     *     prefix also works — ".ii" and ",ii" both fire the same row.
+     * Longer commands win inside each phase, so ".upi2" is not shadowed by ".upi".
      */
     fun findMatch(currentText: String, commands: List<Command>): MatchResult? {
         if (currentText.isEmpty()) return null
         val sorted = commands.sortedByDescending { it.command.length }
+        // Phase 1: exact token.
+        for (cmd in sorted) {
+            val token = cmd.command
+            if (token.isBlank()) continue
+            if (currentText.endsWith(token)) {
+                val startIndex = currentText.length - token.length
+                if (startIndex == 0 || isBoundaryChar(currentText[startIndex - 1])) {
+                    return MatchResult(command = cmd, matchStart = startIndex, matchEnd = currentText.length)
+                }
+            }
+        }
+        // Phase 2: opposite prefix only.
         for (cmd in sorted) {
             val base = cmd.command.removePrefix(".").removePrefix(",")
             if (base.isBlank()) continue
-            for (prefix in listOf(".", ",")) {
-                val token = prefix + base
-                if (currentText.endsWith(token)) {
-                    val startIndex = currentText.length - token.length
-                    val boundaryOk = startIndex == 0 || isBoundaryChar(currentText[startIndex - 1])
-                    if (boundaryOk) {
-                        return MatchResult(command = cmd, matchStart = startIndex, matchEnd = currentText.length)
-                    }
+            val opposite = when {
+                cmd.command.startsWith(".") -> "," + base
+                cmd.command.startsWith(",") -> "." + base
+                else -> continue
+            }
+            if (currentText.endsWith(opposite)) {
+                val startIndex = currentText.length - opposite.length
+                if (startIndex == 0 || isBoundaryChar(currentText[startIndex - 1])) {
+                    return MatchResult(command = cmd, matchStart = startIndex, matchEnd = currentText.length)
                 }
             }
         }
