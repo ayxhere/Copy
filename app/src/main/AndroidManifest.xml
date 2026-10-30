@@ -58,6 +58,11 @@
             android:name=".PrivacyPolicyActivity"
             android:exported="false" />
 
+        <!-- About -->
+        <activity
+            android:name=".AboutActivity"
+            android:exported="false" />
+
         <!-- Accessibility Service -->
         <service
             android:name=".accessibility.CopyAccessibilityService"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AyX Copy</string>
-    <string name="accessibility_service_label">AyX Copy Auto Replace</string>
+    <string name="app_name">AyX Paste</string>
+    <string name="accessibility_service_label">AyX Paste Auto Replace</string>
     <string name="accessibility_service_description">Detects typed shortcuts (like .upi or ,upi) and AI triggers (..ai, ..ea, ..ra) and replaces them automatically in any app.</string>
 
     <!-- UI strings -->
@@ -30,7 +30,7 @@
     <string name="export_backup">Export ayx.json</string>
     <string name="import_backup">Import ayx.json</string>
     <string name="about">About</string>
-    <string name="version">Version 5.0</string>
+    <string name="version">Version 5.1</string>
     <string name="loading_commands">Loading Commands…</string>
     <string name="command_saved">Command saved</string>
     <string name="command_deleted">Command deleted</string>
@@ -47,7 +47,7 @@
     <string name="copied">Copied!</string>
     <string name="replaced">Replaced!</string>
     <string name="service_guide_title">How to enable</string>
-    <string name="service_guide_body">Settings → Accessibility → Copy Me → Enable</string>
+    <string name="service_guide_body">Settings → Accessibility → AyX Paste → Enable</string>
     <string name="backup_exported">Backup exported</string>
     <string name="backup_imported">Backup imported</string>
     <string name="delete_confirm">Delete this command?</string>
@@ -55,27 +55,27 @@
 
     <!-- Privacy Policy -->
     <string name="app_lock">App Lock</string>
-    <string name="app_lock_hint">Require fingerprint to open Copy Me</string>
-    <string name="biometric_prompt_title">Unlock Copy Me</string>
+    <string name="app_lock_hint">Require fingerprint to open AyX Paste</string>
+    <string name="biometric_prompt_title">Unlock AyX Paste</string>
     <string name="biometric_prompt_subtitle">Use your fingerprint to continue</string>
     <string name="biometric_prompt_cancel">Cancel</string>
     <string name="biometric_not_available">Fingerprint not available on this device</string>
     <string name="biometric_none_enrolled">No fingerprints enrolled. Please add one in device Settings.</string>
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="privacy_policy_updated">Updated: 28 October 2026 · Version 5.0</string>
-    <string name="privacy_policy_intro">AyX Copy is built to respect your privacy completely. This policy explains exactly what the app does and does not do with your data.</string>
+    <string name="privacy_policy_updated">Updated: 31 October 2026 · Version 5.1</string>
+    <string name="privacy_policy_intro">AyX Paste is built to respect your privacy completely. This policy explains exactly what the app does and does not do with your data.</string>
     <string name="privacy_section_1_title">No Personal Data Collected</string>
-    <string name="privacy_section_1_body">AyX Copy does not collect, store, transmit, or share any personal information about you. There are no accounts, no sign-ins, no analytics, and no advertising trackers built into this app.</string>
+    <string name="privacy_section_1_body">AyX Paste does not collect, store, transmit, or share any personal information about you. There are no accounts, no sign-ins, no analytics, and no advertising trackers built into this app.</string>
     <string name="privacy_section_2_title">No Access to Your Files</string>
-    <string name="privacy_section_2_body">This app cannot read your device\'s folders, files, photos, contacts, or any other media. The Accessibility Service Copy Me uses only observes text inside the specific input field you are actively typing in, purely to detect your saved shortcut commands. It never scans, browses, or accesses anything outside of that single active text field.</string>
+    <string name="privacy_section_2_body">This app cannot read your device\'s folders, files, photos, contacts, or any other media. The Accessibility Service AyX Paste uses only observes text inside the specific input field you are actively typing in, purely to detect your saved shortcut commands. It never scans, browses, or accesses anything outside of that single active text field.</string>
     <string name="privacy_section_3_title">100% Offline</string>
-    <string name="privacy_section_3_body">Copy Me works offline for commands. AI is optional: only when you type ..ai / ..ea / ..ra, or use AI Generator, only that text is sent to Groq (your own key, stored only on this device). Commands and replacement text stay in a local database on your device.</string>
+    <string name="privacy_section_3_body">AyX Paste works offline for commands. AI is optional: only when you type ..ai / ..ea / ..ra, or use AI Generator, only that text is sent to Groq (your own key, stored only on this device). Commands and replacement text stay in a local database on your device.</string>
     <string name="privacy_section_4_title">Why Accessibility Permission Is Needed</string>
     <string name="privacy_section_4_body">The Accessibility Service permission is the only permission this app requires. It is used solely to detect when you type one of your saved shortcut commands (like .upi) in any text field, and to replace it with your saved text. This permission does not let the app read content outside text fields, take screenshots, log your keystrokes elsewhere, or send any data off your device.</string>
     <string name="privacy_section_5_title">Backups Stay With You</string>
     <string name="privacy_section_5_body">Export creates one plain JSON file named ayx.json, and Import reads ayx.json, at a location you choose. This data never leaves your device automatically — it is only shared if you personally choose to send the exported file somewhere yourself.</string>
     <string name="privacy_section_6_title">No Ads, No Tracking</string>
-    <string name="privacy_section_6_body">Copy Me contains no advertisements, no third-party SDKs, and no hidden trackers of any kind. What you build with this app stays on your device, under your control.</string>
+    <string name="privacy_section_6_body">AyX Paste contains no advertisements, no third-party SDKs, and no hidden trackers of any kind. What you build with this app stays on your device, under your control.</string>
     <string name="privacy_credit_prefix">Written by </string>
     <string name="privacy_credit_name">RaX</string>
 
@@ -97,4 +97,18 @@
     <string name="ai_output_hint">AI result yahan aayega</string>
     <string name="ai_generating">Generating…</string>
     <string name="commands_hint">Command .upi ya ,upi — dono chalenge</string>
+
+    <string name="about_title">About</string>
+    <string name="about_tagline">Fast shortcuts, AI text tools — made for speed.</string>
+    <string name="developer_title">Developer</string>
+    <string name="developer_name">ƦΛjᑌ</string>
+    <string name="about_website_label">Website</string>
+    <string name="about_website_value">imayx.in</string>
+    <string name="about_telegram_label">Telegram</string>
+    <string name="about_telegram_value">t.me/ayxhere</string>
+    <string name="ai_groq_default">Groq • default provider</string>
+    <string name="ai_save_dialog_title">Save as command</string>
+    <string name="ai_command_name_hint">Command name (e.g. .upi)</string>
+    <string name="ai_reply_hint">Reply text</string>
+    <string name="ai_command_exists">This command already exists</string>
 </resources>

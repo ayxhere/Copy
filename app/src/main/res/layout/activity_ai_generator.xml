@@ -16,6 +16,9 @@
             <ImageView android:layout_width="28dp" android:layout_height="28dp" android:src="@drawable/ic_spark" android:tint="@color/accent" />
         </LinearLayout>
         <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="@string/ai_groq_default" android:textColor="@color/accent"
+            android:textSize="11sp" android:layout_marginStart="52dp" android:layout_marginBottom="14dp" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
             android:text="@string/ai_triggers_hint" android:textColor="@color/text_secondary"
             android:textSize="13sp" android:lineSpacingExtra="3dp" android:layout_marginBottom="16dp" />
         <com.google.android.material.chip.ChipGroup android:layout_width="match_parent" android:layout_height="wrap_content"

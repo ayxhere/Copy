@@ -3,16 +3,19 @@ package ayx.copy
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import ayx.copy.database.AppDatabase
+import ayx.copy.database.Command
 import ayx.copy.databinding.ActivityAiGeneratorBinding
 import ayx.copy.utils.GroqClient
 import ayx.copy.utils.PrefManager
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AiGeneratorActivity : AppCompatActivity() {
 
@@ -42,10 +45,52 @@ class AiGeneratorActivity : AppCompatActivity() {
         binding.btnSaveAsCommand.setOnClickListener {
             val out = binding.tvOutput.text?.toString().orEmpty()
             if (out.isBlank()) { Toast.makeText(this, "Pehle Generate karo", Toast.LENGTH_SHORT).show(); return@setOnClickListener }
-            val intent = Intent(this, AddCommandActivity::class.java)
-            intent.putExtra(AddCommandActivity.EXTRA_PREFILL_TEXT, out)
-            startActivity(intent)
+            showSaveDialog(out)
         }
+    }
+
+    private fun showSaveDialog(reply: String) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_save_command, null)
+        val tilName = dialogView.findViewById<com.google.android.material.textfield.TextInputLayout>(R.id.tilCommandName)
+        val etName = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etCommandName)
+        val etReply = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etReplyText)
+        etReply.setText(reply)
+
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+
+        dialogView.findViewById<View>(R.id.btnDialogCancel).setOnClickListener { dialog.dismiss() }
+        dialogView.findViewById<View>(R.id.btnDialogSave).setOnClickListener {
+            var name = etName.text?.toString()?.trim().orEmpty()
+            val text = etReply.text?.toString()?.trim().orEmpty()
+            if (name.isEmpty()) {
+                tilName.error = getString(R.string.command_required)
+                return@setOnClickListener
+            }
+            if (!name.startsWith(".") && !name.startsWith(",")) name = ".$name"
+            if (text.isEmpty()) {
+                Toast.makeText(this, getString(R.string.text_required), Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            tilName.error = null
+            lifecycleScope.launch {
+                val db = AppDatabase.getInstance(applicationContext)
+                val exists = withContext(Dispatchers.IO) {
+                    db.commandDao().getCommandByExactName(name)
+                }
+                if (exists != null) {
+                    tilName.error = getString(R.string.ai_command_exists)
+                    return@launch
+                }
+                withContext(Dispatchers.IO) {
+                    db.commandDao().insert(Command(command = name, replacementText = text))
+                }
+                dialog.dismiss()
+                Toast.makeText(this@AiGeneratorActivity, getString(R.string.command_saved), Toast.LENGTH_SHORT).show()
+            }
+        }
+        dialog.show()
     }
 
     private fun selectMode(newMode: GroqClient.Mode) {

@@ -44,7 +44,7 @@ class CopyAccessibilityService : AccessibilityService() {
         db = AppDatabase.getInstance(applicationContext)
         clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         refreshCache()
-        Log.d(TAG, "Copy Me accessibility service connected")
+        Log.d(TAG, "AyX Paste accessibility service connected")
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
@@ -105,7 +105,7 @@ class CopyAccessibilityService : AccessibilityService() {
         // Do NOT recycle node here: the async Groq call still needs it.
         val key = prefManager.groqApiKey
         if (key.isBlank()) {
-            Toast.makeText(applicationContext, "Pehle AyX Copy > Settings me Groq key dalo", Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext, "Pehle AyX Paste > Settings me Groq key dalo", Toast.LENGTH_LONG).show()
             setNodeText(node, ai.input, onSuccess = null)
             return
         }
@@ -217,7 +217,7 @@ class CopyAccessibilityService : AccessibilityService() {
     }
 
     override fun onInterrupt() {
-        Log.d(TAG, "Copy Me accessibility service interrupted")
+        Log.d(TAG, "AyX Paste accessibility service interrupted")
     }
 
     override fun onDestroy() {

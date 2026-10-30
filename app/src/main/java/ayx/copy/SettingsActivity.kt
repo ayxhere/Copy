@@ -76,6 +76,9 @@ class SettingsActivity : AppCompatActivity() {
         binding.rowPrivacyPolicy.setOnClickListener {
             startActivity(Intent(this, PrivacyPolicyActivity::class.java))
         }
+        binding.rowAbout.setOnClickListener {
+            startActivity(Intent(this, AboutActivity::class.java))
+        }
     }
 
     override fun onResume() {
@@ -159,7 +162,7 @@ class SettingsActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val commands = withContext(Dispatchers.IO) { db.commandDao().getAllCommandsSync() }
             val root = JSONObject()
-            root.put("app", "AyX Copy")
+            root.put("app", "AyX Paste")
             root.put("version", 2)
             val array = JSONArray()
             for (c in commands) {
