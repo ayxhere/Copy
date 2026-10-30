@@ -111,4 +111,16 @@
     <string name="ai_command_name_hint">Command name (e.g. .upi)</string>
     <string name="ai_reply_hint">Reply text</string>
     <string name="ai_command_exists">This command already exists</string>
+
+    <string name="settings_hub_accessibility">Accessibility</string>
+    <string name="settings_hub_accessibility_sub">Service status &amp; setup</string>
+    <string name="settings_hub_commands">Commands</string>
+    <string name="settings_hub_commands_sub">Auto Replace • Quick Copy &amp; Paste</string>
+    <string name="settings_hub_applock">App Lock</string>
+    <string name="settings_hub_applock_sub">Fingerprint protection</string>
+    <string name="settings_hub_ai">AI Assistant</string>
+    <string name="settings_hub_ai_sub">Groq • ..ai ..ea ..ra</string>
+    <string name="settings_hub_backup">Backup</string>
+    <string name="settings_hub_backup_sub">Export / Import ayx.json</string>
+    <string name="backup_title">Backup</string>
 </resources>

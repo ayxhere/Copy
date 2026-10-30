@@ -63,6 +63,24 @@
             android:name=".AboutActivity"
             android:exported="false" />
 
+        <!-- Settings sub-pages -->
+        <activity
+            android:name=".AccessibilitySettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CommandsSettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AppLockSettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AiSettingsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".BackupSettingsActivity"
+            android:exported="false" />
+
         <!-- Accessibility Service -->
         <service
             android:name=".accessibility.CopyAccessibilityService"
